@@ -6,39 +6,36 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/15 14:11:06 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/15 14:40:36 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/15 15:18:36 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
-let ft_print_comb () =
-	let rec comb_a a =
-		let rec comb_b b =
-			let rec comb_c c =
-				if c <= 9 then begin
-					print_int a;
-					print_int b;
-					print_int c;
-					print_string (if a >= 7 then "\n" else ", ");
-					comb_c (c + 1)
-				end;
-			in
-			if b < 9 then begin
-				comb_c (b + 1);
-				comb_b (b + 1)
-			end;
-		in
-		if a <= 9 then begin
-			comb_b (a + 1);
-			comb_a (a + 1)
-		end;
-	in
-	comb_a 0
+let rec comb_c a b c =
+	if a = 0 then begin
+		print_string (if c = 2 then "0" else ", 0");
+		print_int ((b * 10) + c)
+	end else begin
+		print_string ", ";
+		print_int ((a * 100) + (b * 10) + c)
+	end;
+	if c < 9 then
+		comb_c a b (c + 1)
+
+let rec comb_b a b =
+	let b' = b + 1 in
+	comb_c a b b';
+	if b < 8 then
+		comb_b a b'
+
+let rec comb_a a =
+	let a' = a + 1 in
+	comb_b a a';
+	if a < 7 then
+		comb_a a'
+
+let ft_print_comb () = comb_a 0; print_string "\n"
 
 (*
 ** Test
 *)
-let () =
- for i=0 to 100000 do
-   ft_print_comb ()
- done;
- print_newline()
+let () = ft_print_comb ()
