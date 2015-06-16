@@ -6,20 +6,20 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/16 10:10:39 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/16 10:26:02 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/16 11:31:14 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
 let fibonacci n =
-	let rec lol n acc =
+	let rec lol a b n =
 		if n < 0 then
 			-1
-		else if n <= 1 then
-			n + acc
+		else if n = 0 then
+			a
 		else
-			lol (n - 2) (lol (n - 1) acc)
+			lol b (a + b) (n - 1)
 	in
-	lol n 0
+	lol 0 1 n
 
 (*
 ** Test
