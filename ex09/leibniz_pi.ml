@@ -6,32 +6,31 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/16 11:14:47 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/16 13:52:14 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/16 15:12:14 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
 let leibniz_pi delta =
-	let pi4 = atan 1.
-	let rec plus pi div it =
-		let d = pi -. pi4 in
-		if d > (0. -. delta) && d < delta then
-			it
+	let pi4 = 4. *. atan 1. in
+	let rec loop i pi =
+		let d = pi *. 4. -. pi4 in
+		if d > (-.delta) && d < delta then
+			int_of_float i
 		else
-			less pi4 (pi +. (1. /. div)) (div +. 2.) (it + 1)
-	and less pi div it =
-		let d = pi -. pi4 in
-		if d > (0. -. delta) && d < delta then
-			it
-		else
-			plus pi4 (pi -. (1. /. div)) (div +. 2.) (it + 1)
+			loop (i +. 1.) (((-1.) ** i) /. (2. *. i +. 1.) +. pi)
 	in
 	if delta <= 0. then
 		-1
 	else
-		less 1. 3. 0
-
+		loop 0. 0.
 (*
 ** Test
 *)
 let () =
+	print_int (leibniz_pi 0.1); print_char '\n';
+	print_int (leibniz_pi 0.01); print_char '\n';
+	print_int (leibniz_pi 0.001); print_char '\n';
 	print_int (leibniz_pi 0.0001); print_char '\n';
+	print_int (leibniz_pi 0.00001); print_char '\n';
+	print_int (leibniz_pi 0.000001); print_char '\n';
+	print_int (leibniz_pi 0.0000001); print_char '\n';
