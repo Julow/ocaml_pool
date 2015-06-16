@@ -6,13 +6,16 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/15 13:33:09 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/15 13:39:49 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/16 17:53:55 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
 let rec ft_countdown i = 
 	if i <= 0 then
-		print_endline "0"
+		begin
+			print_char '0';
+			print_char '\n'
+		end
 	else
 		begin
 			print_int i;
