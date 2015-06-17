@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/17 18:27:48 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/17 18:46:18 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/17 19:36:10 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -22,3 +22,7 @@ let generate_nucleotide base:nucleotide =
 	| 'C' -> "phosphate", "deoxyribose", C
 	| 'G' -> "phosphate", "deoxyribose", G
 	| _ -> "phosphate", "deoxyribose", None
+
+let () =
+	let (p, d, _) = generate_nucleotide 'A' in
+	print_string p; print_char ' '; print_string d; print_char '\n'
