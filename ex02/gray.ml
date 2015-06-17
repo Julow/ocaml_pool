@@ -6,15 +6,22 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/17 11:35:26 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/17 16:17:20 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/17 17:00:38 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
-let rec shade_rev shade =
-	match shade with
-	| [] -> []
-	| head::tail ->
-		(shade_rev tail) @ [head]
+let rec list_concat l1 l2 =
+	match l1 with
+	| [] -> l2
+	| head::tail -> head :: (list_concat tail l2)
+
+let list_reverse l =
+	let rec loop l acc =
+		match l with
+		| [] -> acc
+		| head::tail -> loop tail (head :: acc)
+	in
+	loop l []
 
 let rec shade_prefix prefix shade =
 	match shade with
@@ -27,8 +34,8 @@ let rec shades_of_gray shade n =
 	| 0 -> shade
 	| _ ->
 		let left = shade_prefix "0" shade in
-		let right = shade_prefix "1" (shade_rev shade) in
-		shades_of_gray (left @ right) (n - 1)
+		let right = shade_prefix "1" (list_reverse shade) in
+		shades_of_gray (list_concat left right) (n - 1)
 
 let rec print_shade shade =
 	match shade with
@@ -53,6 +60,7 @@ let gray n = print_shade (if n > 0 then shades_of_gray ["0"; "1"] (n - 1) else [
 	print_char ']'
  *)
 let () =
+	gray (-1);
 	gray 0;
 	gray 1;
 	gray 2;
