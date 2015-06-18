@@ -6,7 +6,7 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/06/18 14:29:08 by jaguillo          #+#    #+#              #
-#    Updated: 2015/06/18 15:07:29 by jaguillo         ###   ########.fr        #
+#    Updated: 2015/06/18 15:32:04 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBS = graphics.cmxa
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	@ocamlopt $(SRCS) -o "$@"
+	@ocamlopt $(LIBS) $(SRCS) -o "$@"
 
 clean:
 	@rm -f *.o

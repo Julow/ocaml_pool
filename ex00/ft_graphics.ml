@@ -6,15 +6,15 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/18 13:04:30 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/18 15:22:40 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/18 16:43:28 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
 type 'a tree = Nil | Node of 'a * 'a tree * 'a tree
 
 let draw_square x y size =
-	let x' = size / 2 + x in
-	let y' = size / 2 + y in
+	let x' = x - (size / 2) in
+	let y' = y - (size / 2) in
 	Graphics.moveto x' y';
 	Graphics.lineto (x' + size) y';
 	Graphics.lineto (x' + size) (y' + size);
@@ -24,7 +24,7 @@ let draw_square x y size =
 let draw_tree_node node =
 	let draw_node str x y =
 		draw_square x y 30;
-		Graphics.moveto x y;
+		Graphics.moveto (x - 8) (y - 6);
 		Graphics.draw_string str
 	in
 	let draw_line (x1, y1) (x2, y2) =
@@ -43,6 +43,9 @@ let draw_tree_node node =
 (*
 ** Test
 *)
+let rec pause () = pause ()
+
 let () =
-	Graphics.open_graph " 150x200";
-	draw_tree_node (Node ("", Nil, Nil))
+	Graphics.open_graph " 200x100";
+	draw_tree_node (Node ("Lol", Nil, Nil));
+	pause ();
