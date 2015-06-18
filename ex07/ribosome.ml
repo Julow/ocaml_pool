@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/17 20:04:32 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/18 19:55:13 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/18 19:57:31 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -145,7 +145,7 @@ let decode_triplet = function
 	| A, U, G													-> Met
 	| U, U, C | U, U, U											-> Phe
 	| C, C, C | C, C, A | C, C, G | C, C, U						-> Pro
-	| U, C, A | U, C, C | U, C, G | U, C, U						-> Ser
+	| U, C, A | U, C, C | U, C, G | U, C, U | A, G, U | A, G, C	-> Ser
 	| A, C, A | A, C, C | A, C, G | A, C, U						-> Thr
 	| U, G, G													-> Trp
 	| U, A, C | U, A, U											-> Tyr
