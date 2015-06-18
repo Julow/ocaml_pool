@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/18 11:28:25 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/18 11:44:11 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/18 11:58:54 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -156,7 +156,7 @@ let decode_triplet = function
 	| A, U, G													-> Met
 	| U, U, C | U, U, U											-> Phe
 	| C, C, C | C, C, A | C, C, G | C, C, U						-> Pro
-	| U, C, A | U, C, C | U, C, G | U, C, U						-> Ser
+	| U, C, A | U, C, C | U, C, G | U, C, U | A, G, U | A, G, C	-> Ser
 	| A, C, A | A, C, C | A, C, G | A, C, U						-> Thr
 	| U, G, G													-> Trp
 	| U, A, C | U, A, U											-> Tyr
@@ -172,6 +172,15 @@ let decode_arn (r:rna) :protein =
 			(decode_triplet head) :: (loop tail)
 	in
 	loop (generate_bases_triplets r)
+
+(*
+** Life
+*)
+let rec decode_helix str i acc :helix =
+	match i with
+	| i when i < 0			-> acc
+	| _						->
+		decode_helix str (i - 1) (generate_nucleotide (String.get str i) :: acc)
 
 let rec print_rna r =
 	match r with
@@ -197,10 +206,8 @@ let rec print_triplet t =
 		print_triplet tail
 
 let life str =
-	let helix_len = 160 in
-	print_string ("Hello " ^ str ^ " let's create a helix of ");
-	print_int helix_len; print_char '\n';
-	let h = generate_helix helix_len in
+	print_string ("The code of life: " ^ str ^ "\n");
+	let h = decode_helix str ((String.length str) - 1) [] in
 	print_string "Helix:\n";
 	print_string (helix_to_string h); print_char '\n';
 	print_string "Now complementary:\n";
@@ -217,4 +224,7 @@ let life str =
 (*
 ** Test
 *)
-let () = Random.self_init (); life "Lol"
+let () =
+	life "ATCG";
+	life "GGCT";
+	life "TCGTCAGTACTAGCATGCATATCGAGTCGTACGTAGTATATATACGCGGCGCATCAGTGCATCAGTCGATCTAGCTAGCATGCATCTACTGAGTCATCATCG";
