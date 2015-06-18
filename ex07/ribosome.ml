@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/17 20:04:32 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/18 11:25:40 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/18 19:55:13 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -121,7 +121,8 @@ let string_of_aminoacid = function
 	| Tyr				-> "Tyrosine"
 	| Val				-> "Valine"
 
-let rec string_of_protein = function
+let rec string_of_protein(p:protein) =
+	match p with
 	| []				-> ""
 	| head::sec::tail	->
 		(string_of_aminoacid head) ^ ", " ^ (string_of_protein (sec::tail))
