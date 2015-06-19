@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/18 16:46:13 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/18 19:21:04 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/19 18:54:29 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -39,8 +39,8 @@ let draw_string x y str =
 	Graphics.draw_string str
 
 let rec size = function
-	| Nil					-> 1
-	| Node (_, Nil, Nil)	-> 3
+	| Nil					-> 0
+	| Node (_, Nil, Nil)	-> 1
 	| Node (_, a, Nil)		-> 1 + (size a)
 	| Node (_, Nil, b)		-> 1 + (size b)
 	| Node (_, a, b)		-> 1 + (size a) + (size b)
@@ -48,15 +48,15 @@ let rec size = function
 let max a b = if a < b then b else a
 
 let rec height = function
-	| Nil					-> 1
-	| Node (_, Nil, Nil)	-> 2
+	| Nil					-> 0
+	| Node (_, Nil, Nil)	-> 1
 	| Node (_, a, Nil)		-> 1 + (height a)
 	| Node (_, Nil, b)		-> 1 + (height b)
 	| Node (_, a, b)		-> 1 + (max (height a) (height b))
 
 let draw_tree t =
 	let rec draw_next t x y =
-		let h = (int_of_float (2. ** float ((height t) - 2))) * (case_height / 2 + case_margin) in
+		let h = (int_of_float (2. ** float ((height t) - 1))) * (case_height / 2 + case_margin) in
 		draw_rect x y case_width case_height;
 		match t with
 		| Nil				-> draw_string x y "Nil"
