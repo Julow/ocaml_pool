@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/18 19:23:35 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/19 11:01:50 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/19 19:01:05 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -18,7 +18,7 @@ let xor key str =
 	let xorc key c = char_of_int ((int_of_char c) lxor key) in
 	String.map (xorc key) str
 
-let rec ft_crypt str fn =
+let rec ft_crypt (str:string) fn =
 	match fn with
 	| []				-> str
 	| head::tail		-> ft_crypt (head str) tail
