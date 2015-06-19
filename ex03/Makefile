@@ -6,7 +6,7 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/06/18 19:23:30 by jaguillo          #+#    #+#              #
-#    Updated: 2015/06/19 11:05:06 by jaguillo         ###   ########.fr        #
+#    Updated: 2015/06/19 13:49:58 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := btree
 
 SRCS := btree.ml
 
-LIBS :=
+LIBS := graphics.cmxa
 
 all: $(NAME)
 
