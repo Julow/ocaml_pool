@@ -6,13 +6,13 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/06/18 19:23:30 by jaguillo          #+#    #+#              #
-#    Updated: 2015/06/18 19:24:12 by jaguillo         ###   ########.fr        #
+#    Updated: 2015/06/19 10:51:45 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := cipher
 
-SRCS := cipher.ml uncipher.ml
+SRCS := uncipher.ml cipher.ml
 
 LIBS :=
 
