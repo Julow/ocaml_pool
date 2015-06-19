@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/19 11:04:22 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/19 19:44:40 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/19 20:13:09 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -16,8 +16,8 @@ let max a b = if a < b then b else a
 let abs a = if a < 0 then (-a) else a
 
 let rec height = function
-	| Nil					-> 1
-	| Node (_, Nil, Nil)	-> 2
+	| Nil					-> 0
+	| Node (_, Nil, Nil)	-> 1
 	| Node (_, a, Nil)		-> 1 + (height a)
 	| Node (_, Nil, b)		-> 1 + (height b)
 	| Node (_, a, b)		-> 1 + (max (height a) (height b))
@@ -91,26 +91,11 @@ let balance_avl v l r =
 	else if diff < (-1) then
 		match r with
 		| Node (v', l', r') when (height l') - (height r') <= 0	-> Node (v', Node (v, l, r'), l')
-		| Node (v', Node (v'', l'', r''), r')					-> Node (v'', Node (v, l, l''), Node (v', l'', r'))
+		| Node (v', Node (v'', l'', r''), r')					-> Node (v'', Node (v, l, r''), Node (v', l'', r'))
 		| _														-> failwith "Cannot balance"
 	else
 		Node (v, l, r)
-(* 
-let balance v l r =
-	let diff = (height l) - (height r) in
-	if diff > 1 then
-		match l with
-		| Node(v', l', r') when (height l') - (height r') >= 0 	-> Node(v', l', Node(v, r', r))
-		| Node(v', l', Node(v'', l'', r'')) 					-> Node(v'', Node(v', l', l''), Node(v, r'', r))
-		| _ 													-> failwith "Balancing failed"
-	else if diff < (-1) then
-		match r with
-		| Node(v', l', r') when (height l') - (height r') <= 0	-> Node(v', Node(v, l, r'), r')
-		| Node(v', Node(v'', l'', r''), r')						-> Node(v'', Node(v, l, l''), Node(v', l'', r'))
-		| _														-> failwith "Balancing failed"
-	else
-		Node(v, l, r)
- *)
+
 let rec insert_avl t v =
 	match t with
 	| Nil							-> Node (v, Nil, Nil)
@@ -164,16 +149,9 @@ let rec size = function
 
 let max a b = if a < b then b else a
 
-let rec height = function
-	| Nil					-> 1
-	| Node (_, Nil, Nil)	-> 2
-	| Node (_, a, Nil)		-> 1 + (height a)
-	| Node (_, Nil, b)		-> 1 + (height b)
-	| Node (_, a, b)		-> 1 + (max (height a) (height b))
-
 let draw_tree t =
 	let rec draw_next t x y =
-		let h = (int_of_float (2. ** float ((height t) - 2))) * (case_height / 2 + case_margin) in
+		let h = (int_of_float (2. ** float ((height t) - 1))) * (case_height / 2 + case_margin) in
 		draw_rect x y case_width case_height;
 		match t with
 		| Nil				-> draw_string x y "Nil"
@@ -226,6 +204,6 @@ let () =
 	let tree = insert_avl tree (-100) in
 	let tree = insert_avl tree (-1) in
 	test tree;
-	print_endline "---------";
 	test_graph tree;
+	print_endline "---------";
 	pause ();
