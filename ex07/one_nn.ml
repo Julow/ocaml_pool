@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/22 18:05:40 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/22 18:39:49 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/23 18:32:23 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -17,7 +17,7 @@ type radar = float array * string
 *)
 
 let eu_dist a b =
-	if (Array.length a) != (Array.length b) then
+	if (Array.length a) <> (Array.length b) then
 		invalid_arg "Array have not the same dimension";
 	let res = ref 0. in
 	for i = 0 to ((Array.length a) - 1) do

@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/22 15:24:33 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/22 18:03:59 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/23 17:49:49 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -47,7 +47,7 @@ let examples_of_line c_in =
 			(fun i -> float_of_string (List.nth csv i)) in
 		(floats, (List.nth csv  ((List.length csv) - 1)))
 
-let examples_of_files path =
+let examples_of_file path =
 	let res = ref [] in
 	begin
 		try
@@ -84,7 +84,7 @@ let main argc argv =
 	if argc < 2 then
 		failwith "Not enougth argument"
 	else
-		print_example (examples_of_files argv.(1))
+		print_example (examples_of_file argv.(1))
 
 let () =
 	try main (Array.length Sys.argv) Sys.argv with
