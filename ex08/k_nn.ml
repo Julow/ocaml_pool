@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/22 18:42:40 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/23 18:32:44 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/23 18:46:50 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -68,7 +68,7 @@ let best_class bests =
 			occur
 		else
 			let ((_, s'), _) = bests.(i) in
-			if (String.compare s' s) = 0 then
+			if s' = s then
 				occur_count bests s (i + 1) (occur + 1)
 			else
 				occur_count bests s (i + 1) occur
@@ -76,7 +76,7 @@ let best_class bests =
 	let rec best_seq bests i best_i =
 		if (Array.length bests) <= i then
 			let (r, _) = bests.(best_i) in
-			print_int best_i;
+			(* print_int best_i; *)
 			r
 		else
 			let ((_, s), _) = bests.(i) in
