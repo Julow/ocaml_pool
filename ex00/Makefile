@@ -6,7 +6,7 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/06/20 11:16:05 by jaguillo          #+#    #+#              #
-#    Updated: 2015/06/24 14:31:30 by jaguillo         ###   ########.fr        #
+#    Updated: 2015/06/24 15:33:41 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,18 @@ LIBS :=
 
 SRCS := people.ml main.ml
 
-BYT_OBJS := $(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmo))
-OPT_OBJS := $(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmx))
-INC_OBJS := $(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmi))
+BYT_OBJS := \
+	$(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmo))
+OPT_OBJS := \
+	$(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmx))
+GARBAGES := \
+	$(addprefix $(OBJS_DIR),$(SRCS:.ml=.cmi)) \
+	$(addprefix $(OBJS_DIR),$(SRCS:.ml=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJS_DIR)$(NAME).byt $(OBJS_DIR)$(NAME).opt
 	@ln -sf $(OBJS_DIR)$(NAME).opt $@
-	@echo "Done"
 
 byt: $(OBJS_DIR)$(NAME).byt
 $(OBJS_DIR)$(NAME).byt: $(OBJS_DIR) $(BYT_OBJS)
@@ -42,9 +45,9 @@ $(OBJS_DIR)$(NAME).opt: $(OBJS_DIR) $(OPT_OBJS)
 	@ln -sf $(OBJS_DIR)$(NAME).opt $(NAME)
 	@echo "$@"
 
-.depend: Makefile
+.depend: Makefile $(SRCS_DIR)
 	@ocamldep -I $(SRCS_DIR) $(addprefix $(SRCS_DIR),$(SRCS)) | \
-		sed 's_$(subst .,\.,$(SRCS_DIR))_$(OBJS_DIR)_g' > .depend
+		sed -E 's;[^ \.]+\.[^ :]+;$(OBJS_DIR)&;g' > .depend
 
 $(OBJS_DIR)%.cmo: $(SRCS_DIR)%.ml
 	@ocamlc -g $(FLAGS) -o $@ -c $<
@@ -58,14 +61,15 @@ $(OBJS_DIR)%.cmi: $(SRCS_DIR)%.mli
 	@ocamlopt -I $(OBJS_DIR) -o $@ -c $<
 	@echo "$<"
 
-$(OBJS_DIR):
+$(OBJS_DIR) $(SRCS_DIR):
 	@mkdir -p $@
 
 clean:
-	@rm -f $(BYT_OBJS) $(OPT_OBJS) $(INC_OBJS)
+	@rm -f $(BYT_OBJS) $(OPT_OBJS) $(GARBAGES)
 
 fclean: clean
-	@rm -f $(NAME) $(OBJS_DIR)$(NAME).opt $(OBJS_DIR)$(NAME).byt
+	@rm -f .depend $(NAME) $(OBJS_DIR)$(NAME).opt $(OBJS_DIR)$(NAME).byt
+	@rmdir $(OBJS_DIR) 2> /dev/null || true
 
 re: fclean all
 
