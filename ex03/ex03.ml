@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/23 14:21:47 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/23 15:44:39 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/24 19:41:47 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -85,19 +85,24 @@ module Make : MAKE =
 		let add a b = a + b
 		let sub a b = a - b
 		let mul a b = int_of_float ((float_of_int a) *. (to_float b))
-		let div a b = a / b
+		let div a b = of_float ((to_float a) /. (to_float b))
 
 		let foreach a b f =
-			let rec loop a b =
+			let rec loop a =
 				if a <= b then begin
-					f a; loop (a + 1) b
+					f a; loop (a + 1)
+				end else
+					()
+			and loop_down a =
+				if a >= b then begin
+					f a; loop_down (a - 1)
 				end else
 					()
 			in
 			if a > b then
-				loop b a
+				loop_down a
 			else
-				loop a b
+				loop a
 	end
 
 (*
@@ -132,4 +137,5 @@ let () =
 	let r8 = Fixed8.add x8 y8 in
 	print_endline (Fixed8.to_string r8);
 	Fixed4.foreach (Fixed4.zero) (Fixed4.one) (fun f -> print_endline (Fixed4.to_string f));
+	(* Fixed4.foreach (Fixed4.one) (Fixed4.zero) (fun f -> print_endline (Fixed4.to_string f)); *)
 	Fixed4.foreach (Fixed4.of_int 5) (Fixed4.of_int 6) (test (Fixed4.of_float 5.5))
