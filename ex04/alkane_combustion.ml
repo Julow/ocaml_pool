@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/25 17:17:13 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/26 19:25:57 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/26 19:56:52 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -45,7 +45,7 @@ let rec lol_start (alkanes:(Molecule.molecule) list) acc =
 class alkane_combustion (__alkanes:Alkane.alkane list) = object
 	inherit Reaction.reaction [] []
 	val _init = molecules_of_alkanes __alkanes (0, 0)
-	val _start :((Molecule.molecule * int) list) = lol_start (__alkanes :> Molecule.molecule list) []
+	val _start :((Molecule.molecule * int) list) = lol_start (__alkanes :> Molecule.molecule list) [(new Molecule.dioxygen, 0)]
 	val _result :((Molecule.molecule * int) list) = []
 	val _balanced = false
 	method get_start = if _balanced then _start else failwith "Not balanced"
@@ -55,6 +55,7 @@ class alkane_combustion (__alkanes:Alkane.alkane list) = object
 			let rec loop l =
 				match l with
 				| []									-> []
+				| (m,_)::tail when m#formula = "O2"		-> (m, diox)::(loop tail)
 				| (m,n)::tail							-> (m, n * f)::(loop tail)
 			in
 			loop _start
@@ -80,8 +81,11 @@ end
 let rec print_molecules = function
 | []				-> ()
 | (m,n)::tail		->
+	print_char ' ';
 	print_int n;
+	print_char '(';
 	print_string (m#formula);
+	print_char ')';
 	print_molecules tail
 
 let rec print_alkanes = function
