@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/25 13:05:31 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/25 15:37:44 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/26 13:33:28 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -53,6 +53,7 @@ end
 class trinitrotoluene = object inherit molecule "Trinitrotoluene" [new Atom.nitrogen;new Atom.nitrogen;new Atom.nitrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.oxygen;new Atom.oxygen;new Atom.oxygen;new Atom.oxygen;new Atom.oxygen;new Atom.oxygen;new Atom.carbon;new Atom.carbon;new Atom.carbon;new Atom.carbon;new Atom.carbon;new Atom.carbon] end
 class water = object inherit molecule "Water" [new Atom.hydrogen;new Atom.hydrogen;new Atom.oxygen] end
 class carbon_dioxyde = object inherit molecule "Carbon dioxyde" [new Atom.carbon;new Atom.oxygen;new Atom.oxygen] end
+class dioxygen = object inherit molecule "Dioxygen" [new Atom.oxygen;new Atom.oxygen] end
 class acetic_acid = object inherit molecule "acetic_acid" [new Atom.hydrogen;new Atom.carbon;new Atom.carbon;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.oxygen;new Atom.oxygen] end
 class acetone = object inherit molecule "acetone" [new Atom.carbon;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.carbon;new Atom.oxygen;new Atom.carbon;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;] end
 class acetonitrile = object inherit molecule "acetonitrile" [new Atom.carbon;new Atom.hydrogen;new Atom.hydrogen;new Atom.hydrogen;new Atom.carbon;new Atom.nitrogen] end
