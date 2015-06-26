@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/25 15:21:59 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/25 16:42:58 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/26 19:42:32 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -43,7 +43,7 @@ let list_create f len =
 let alkane_formula n =
 	(list_create (fun i -> new Atom.carbon) n) @ (list_create (fun i -> new Atom.hydrogen) (2 * n + 2))
 
-class virtual alkane n = object
+class alkane n = object
 	inherit Molecule.molecule (alkane_name n) (alkane_formula n)
 end
 
