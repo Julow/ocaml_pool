@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/25 17:17:13 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/26 15:17:54 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/26 19:25:57 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -28,7 +28,10 @@ let ppcm a b =
 		else
 			loop acc_a (acc_b + 1)
 	in
-	loop 1 1
+	if a = 0 || b = 0 then
+		0
+	else
+		loop 1 1
 
 let rec lol_start (alkanes:(Molecule.molecule) list) acc =
 	match alkanes with
@@ -52,19 +55,21 @@ class alkane_combustion (__alkanes:Alkane.alkane list) = object
 			let rec loop l =
 				match l with
 				| []									-> []
-				(* | (mol, _)::tl when mol#formula = "O2"	-> (mol, diox)::(loop tl) *)
-				| (mol, n)::tl							-> (mol, n * f)::(loop tl)
+				| (m,n)::tail							-> (m, n * f)::(loop tail)
 			in
 			loop _start
 		and balance_right dcarbon water =
 			[(new Molecule.carbon_dioxyde, dcarbon); (new Molecule.water, water)]
 		in
 		let _c, _h = _init in
-		let dcarbon = ppcm 4 _c in
-		let fact = dcarbon / _c in
-		let water = _h * fact / 2 in
-		let diox = water / 2 + dcarbon in
-		({< _start = balance_left fact diox ; _result = balance_right dcarbon water ; _balanced = true >} :> Reaction.reaction)
+		if _c > 0 && _h > 0 then
+			let dcarbon = ppcm 4 _c in
+			let fact = dcarbon / _c in
+			let water = _h * fact / 2 in
+			let diox = water / 2 + dcarbon in
+			({< _start = balance_left fact diox ; _result = balance_right dcarbon water ; _balanced = true >} :> Reaction.reaction)
+		else
+			({< _balanced = true >} :> Reaction.reaction)
 	method is_balanced = _balanced
 end
 
@@ -87,14 +92,21 @@ let rec print_alkanes = function
 
 let test start =
 	print_alkanes start;
+	let r = (new alkane_combustion start) in
+	print_string (if r#is_balanced then " (balanced)" else " (unbalanced)");
 	print_string " ----> ";
-	let r = (new alkane_combustion start)#balance in
+	let r = r#balance in
 	print_molecules (r#get_start);
 	print_string " = ";
 	print_molecules (r#get_result);
+	print_string (if r#is_balanced then " (balanced)" else " (unbalanced)");
 	print_newline ()
 
 let () =
+	(* test []; *)
 	test [new Alkane.methane];
 	test [new Alkane.methane;new Alkane.butane;];
 	test [new Alkane.methane;new Alkane.butane;new Alkane.undecane;];
+	test [new Alkane.methane;new Alkane.hexadecane;new Alkane.butane;new Alkane.undecane;];
+	(* ignore ((new alkane_combustion [new Alkane.dodecane])#get_start) *)
+	(* ignore ((new alkane_combustion [new Alkane.dodecane])#get_result) *)
