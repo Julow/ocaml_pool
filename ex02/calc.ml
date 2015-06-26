@@ -6,7 +6,7 @@
 (*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2015/06/26 16:00:20 by jaguillo          #+#    #+#             *)
-(*   Updated: 2015/06/26 16:41:09 by jaguillo         ###   ########.fr       *)
+(*   Updated: 2015/06/26 16:56:33 by jaguillo         ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -26,7 +26,7 @@ module INT :(MONOID with type element = int) = struct
 	let zero2 = 1
 	let mul = ( * )
 	let add = ( + )
-	let div a b = if b = 0 then failwith "Division by 0" else a / b
+	let div a b = if b = 0 then zero1 else a / b
 	let sub = ( - )
 end
 
@@ -36,7 +36,7 @@ module FLOAT :(MONOID with type element = float) = struct
 	let zero2 = 1.
 	let mul = ( *. )
 	let add = ( +. )
-	let div a b = if b = 0. then failwith "Division by 0" else a /. b
+	let div = ( /. )
 	let sub = ( -. )
 end
 
@@ -49,7 +49,7 @@ module Calc =
 		let div = Lol.div
 		let power a b =
 			if b <= 0 then
-				failwith "Bad power"
+				Lol.zero2
 			else
 				let rec loop b acc =
 					if b > 0 then
@@ -60,7 +60,7 @@ module Calc =
 				loop b Lol.zero2
 		let fact a =
 			if a < Lol.zero1 then
-				failwith "Bad fact"
+				Lol.zero2
 			else
 				let rec loop a' acc =
 					if a' < a then
@@ -82,13 +82,16 @@ let () =
 	print_endline (string_of_float (Calc_float.mul (Calc_float.add 20.0 1.0) 2.0));
 	print_endline (string_of_int (Calc_int.div (Calc_int.add 20 1) 2));
 	print_endline (string_of_float (Calc_float.div (Calc_float.add 20.0 1.0) 2.0));
-	(* print_endline (string_of_int (Calc_int.div (Calc_int.add 20 1) 0)); *)
-	(* print_endline (string_of_float (Calc_float.div (Calc_float.add 20.0 1.0) 0.0)); *)
+	print_endline (string_of_int (Calc_int.div (Calc_int.add 20 1) 0));
+	print_endline (string_of_float (Calc_float.div (Calc_float.add 20.0 1.0) 0.0));
 	print_endline (string_of_float (Calc_float.power 5.124 5));
 	print_endline (string_of_float (Calc_float.power 5.124 3));
 	print_endline (string_of_int (Calc_int.fact 4));
 	print_endline (string_of_int (Calc_int.fact 10));
 	print_endline (string_of_int (Calc_int.fact 0));
-	(* print_endline (string_of_int (Calc_int.fact (-1))); *)
+	print_endline (string_of_int (Calc_int.fact (-1)));
+	print_endline (string_of_int (Calc_int.power 5 0));
+	print_endline (string_of_int (Calc_int.power 8 1));
+	print_endline (string_of_int (Calc_int.power 7 (-1)));
 	print_endline (string_of_float (Calc_float.fact 5.124));
-	(* print_endline (string_of_float (Calc_float.power 5.124 0)); *)
+	print_endline (string_of_float (Calc_float.power 5.124 0));
